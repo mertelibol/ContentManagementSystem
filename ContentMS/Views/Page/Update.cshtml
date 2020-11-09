@@ -1,0 +1,94 @@
+﻿@model LayoutModel
+@{ ViewBag.Title = "Add"; }
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-plus font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> Sayfa Güncelle</span>
+                </div>
+            </div>
+
+            <form action="/Page/Update" method="post">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" name="Name" value="" id="form_control_1" placeholder="@ViewBag.page.Name">
+                                    <label for="form_control_1">Sayfa Adı</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <label for="form_control_1">Layout Adı</label>
+                                <select class="form-control" name="layoutId" id="layoutsec">
+                                    <option value="@ViewBag.layout.Name" selected="selected"></option>
+
+                                    @foreach (var lay in Model.Layouts)
+                                    {
+                        <option value="@lay.Id">
+                            @lay.Name
+                        </option>}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="textareaAlani" class="row">
+
+                            @foreach (var page in Model.Pages)
+                            {
+
+                                foreach (var content in page.PageContents)
+                                {
+                <div>
+                    <textarea name="txtArealar[]">@content.Content</textarea>
+                    <input name="pageId" value="@content.PageId" type="hidden">
+                </div>}
+        }
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="submit" class="btn blue">Kaydet</button>
+                    </div>
+                </div>
+                <input name="oldPageName" value="@ViewBag.page.Name" type="hidden">
+
+                <input name="pageId" value="@ViewBag.page.Id" type="hidden">
+            </form>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CKEDITOR.replaceAll();
+        $("#layoutsec")
+            .change(function () {
+                var layout = $("#layoutsec option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    url: "/Page/LayoutCagir?cagırdıgım=" + layout,
+                    success: function (result) {
+                        $("#textareaAlani > div").remove();
+
+                        $.each(result,
+                            function (index,value) {
+                                $("#textareaAlani").append('<div class="' +
+                                    value +
+                                    '"><textarea  name="txtArealar[]"></textarea></div>');
+                            });
+
+                        CKEDITOR.replaceAll();
+                    },
+                    error: function (response) {
+                        alert("Hata!")
+                    }
+                });
+
+            });
+    });</script>

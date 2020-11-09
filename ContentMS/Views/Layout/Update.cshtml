@@ -1,0 +1,114 @@
+﻿@{ ViewBag.Title = "Add";
+                 }
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-settings font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> Layout Güncelle</span>
+                </div>
+            </div>
+
+            <form action="/Layout/Update" method="post">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="form-group form-md-line-input">
+                            <input type="text" class="form-control" name="Name" id="form_control_1" placeholder="Layout adını buraya giriniz" value="@ViewBag.layout.Name">
+                            <label for="form_control_1">Layout Adı</label>
+                        </div>
+                        <center>
+                            <button style="margin-bottom:10px;" data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-outline btn-warning">
+                                Kolon Güncelle
+                            </button>
+                        </center>
+                        <div id="section">
+                            @foreach (var bilgi in ViewBag.layout.LayoutItems)
+                            {
+                          
+                            <div id="colonWith" class="@bilgi.Class">
+                                <div class="input-group">
+                                    <input type="text" name="kolonlar[]" class="form-control" readonly value="@bilgi.Class">
+                                    <span class="input-group-btn">
+                                        <button id="buttonSil" class="btn btn-danger" type="button">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>}
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="submit" class="btn blue">Kaydet</button>
+                    </div>
+                </div>
+                <input name="oldLayout" value="@ViewBag.layout.Name" type="hidden" /> @*BURADA ESKİ İSMİ TUTUYORUM EGER TUTMAZSAM UPDATE İŞLEMİNİ YAPMAZ!!*@
+            </form>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="col-md-6">
+                    <select id="sutunTipiSelect" class="form-control">
+                        <option value="col-xs-">col-xs-</option>
+                        <option value="col-sm-">col-sm-</option>
+                        <option value="col-md-">col-md-</option>
+                        <option value="col-lg-">col-lg-</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select id="sutunBoyutuSelect" class="form-control">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" id="kolonOlustur" class="btn btn-primary">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">$(document).ready(function() {
+        $("#kolonOlustur").click(function(e) {
+            e.preventDefault();
+
+            var kolonBoyut = $("#sutunBoyutuSelect option:selected").val();
+            var kolonTipi = $("#sutunTipiSelect option:selected").val();
+            var kolon = kolonTipi + kolonBoyut;
+            $("#section").append(
+                '<div id="colonWith" class="' +
+                kolon +
+                '"><div class="input-group"><input type="text" name="kolonlar[]" class="form-control" readonly value="' +
+                kolon +
+                '"><span class="input-group-btn"><button id="buttonSil" class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button></span></div></div>');
+        });
+
+        $("#section").on("click",
+            "#buttonSil",
+            function(e) {
+                e.preventDefault;
+                $(this).parent().parent().remove();
+            });
+
+    });</script>

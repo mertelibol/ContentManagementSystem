@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Common.DTOs.LayoutDto>
+@{ ViewBag.Title = "Add"; }
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-plus font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> Sayfa Ekle</span>
+                </div>
+            </div>
+
+            <form action="/Page/Add" method="post">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" name="Name" id="form_control_1" placeholder="Sayfa adını buraya giriniz">
+                                    <label for="form_control_1">Sayfa Adı</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="form_control_1">Layout Adı</label>
+                                <select class="form-control" name="layoutId" id="layoutsec">
+                                    <option selected="selected" value="wrong">Seçim Yap</option>
+                                    @foreach (var layouts in Model)
+                                    {
+                        <option value="@layouts.Id">
+                            @layouts.Name
+                        </option>
+}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="form_control_1">Bağlı Menü Adı</label>
+                                <select class="form-control" name="MenuId" id="layoutCagirSelect">
+                                    <option selected="selected" value="wrong">Seçim Yap</option>
+                                    @foreach (var layouts2 in ViewBag.menulist)
+                                    {
+                        <option value="@layouts2.Id">
+                            @layouts2.Name
+                        </option>
+}
+                                </select>
+                            </div>
+                        </div>
+                        <div id="textareaAlani" class="row">
+
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="submit" class="btn blue">Kaydet</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#layoutsec")
+            .change(function () {
+                var secilen = $("#layoutsec option:selected").val();
+               
+                    $.ajax({
+                        type: "GET",
+                        url: "/Page/LayoutCagir?cagırdıgım=" + secilen,
+                        success: function (result) {
+                          
+
+                            $.each(result, function (index, value) {
+                                $("#textareaAlani").append('<div class="' + value + '"><input type="hidden" name="Classes" value="' + value + '" /><textarea  name="txtArealar[]"></textarea></div>');
+                            });
+
+                            CKEDITOR.replaceAll();
+                        },
+                        error: function (response) {
+                            alert("Hata");
+                        }
+                    });
+              
+            });
+    });
+</script>

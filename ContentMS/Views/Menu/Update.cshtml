@@ -1,0 +1,98 @@
+﻿
+@model IEnumerable<Common.DTOs.MenuDto>
+@{ ViewBag.Title = "Menu Update";
+}
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN SAMPLE FORM PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-red-sunglo">
+                    <i class="icon-plus font-red-sunglo"></i>
+                    <span class="caption-subject bold uppercase"> Menu Güncelle</span>
+                </div>
+            </div>
+            <form action="/Menu/Update" method="post">
+                <div class="portlet-body form">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" name="Name" id="form_control_1" value="@ViewBag.Name" placeholder="Menu adını buraya giriniz">
+                                    <input type="hidden" name="oldName" value="@ViewBag.Name">
+                                    <label for="form_control_1">Menu Adı</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="form_control_1">Bağlı Menü Adı</label>
+                                @*<select class="form-control" name="parentId">
+            <option>Yok</option>
+            @foreach (var menu in Model)
+            {
+
+                <option value="@menu.Id">
+                    @menu.Name
+                </option>
+            }
+        </select>*@
+                                @*<select class="form-control" name="parentId">
+                                    <option>Yok</option>
+                                    @foreach (var menu in Model)
+                                    {
+                                        <option selected disabled hidden>@menu.Name</option>
+                                        <option value="@menu.Id">
+                                            @menu.Name
+                                        </option>
+                                    }
+                                </select>*@
+                                <select class="form-control" name="parentId" id="layoutCagirSelect">
+                                    @{ int a = 0;
+                                        foreach (var menu in Model)
+                                        {
+
+                                            if (ViewBag.ParentID == menu.Id)
+                                            {
+                                                <option selected="selected" value="@menu.Id">
+                                                    @menu.Name
+                                                </option>
+                                            }
+                                            else
+                                            {
+                                                if (a == 0)
+                                                {
+                                                    <option>Yok</option>
+                                                    a += 1;
+                                                }
+
+
+                                                <option value="@menu.Id">
+                                                    @menu.Name
+
+                                                </option>
+                                            }
+                                        } }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group form-md-line-input">
+                                    <input type="text" class="form-control" name="icon" value="@ViewBag.Icon" id="iconPicker" placeholder="Menu adını buraya giriniz">
+                                    <label for="form_control_1">Menu İcon</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions noborder">
+                        <button type="submit" class="btn blue">Kaydet</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <!-- END SAMPLE FORM PORTLET-->
+    </div>
+</div>
+
+<script>$('#iconPicker').iconpicker();</script>

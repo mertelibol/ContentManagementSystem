@@ -1,0 +1,74 @@
+﻿
+@model IEnumerable<Common.DTOs.PageDto>
+@{ ViewBag.Title = "Index";
+                 }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="pull-right">
+              
+            </div>
+        </div>
+
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">Sayfalar</span>
+                </div>
+
+                <div class="tools"> </div>
+
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Sayfa Adı </th>
+                            <th> Bağlı Layout </th>
+                            <th>
+                                İşlemler
+                                <a style="margin-left:250px;" class="btn btn-success btn-outline" href="/Page/Add">@*<i class="fa fa-plus"></i>*@Sayfa Ekle</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var PageBilgiler in Model)
+                        {
+            <tr>
+                <td>
+                    @PageBilgiler.Id
+                </td>
+                <td>
+                    @PageBilgiler.Name
+                </td>
+                <td>@PageBilgiler.LayoutName </td>
+                <td>
+                    <a class="btn btn-primary btn-outline" href="/Page/Update?pageName=@PageBilgiler.Name">
+
+                        Güncelle
+                    </a>
+                    <a class="btn btn-danger btn-outline" href="/Page/Delete?pageName=@PageBilgiler.Name">
+
+                        Sil
+                    </a>
+                  
+
+                    <a class="btn btn-warning btn-outline" href="/Preview/Index?pageId=@PageBilgiler.Id">
+
+                        Önizleme
+                    </a>
+
+                </td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END EXAMPLE TABLE PORTLET-->

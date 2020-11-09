@@ -1,0 +1,95 @@
+﻿
+@model IEnumerable<Common.DTOs.MenuDto>
+@{ ViewBag.Title = "Index";
+               }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+           
+        </div>
+
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">Menüler</span>
+                </div>
+
+                <div class="tools"> </div>
+
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Menü Adı </th>
+                            <th> Sayfa Saysı </th>
+                            <th> Güncelleme Tarihi </th>
+                            <th>
+                                İşlemler
+                                <a style="margin-left:200px;" class="btn btn-success btn-outline" href="/Menu/Add">@*<i class="fa fa-plus"></i>*@Menü Ekle</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var menu in Model)
+                        {
+                            if (menu.ParentId == null)
+                            {
+
+
+            <tr>
+                <td>
+                    @menu.Id
+                </td>
+                <td>@menu.Name</td>
+                <td>@menu.Pages.Count() </td>
+                <td>@menu.UpdatedAt </td>
+                <td>
+                    <a class="btn btn-warning btn-outline" href="/Menu/Update?MenuName=@menu.Name">
+                        @*<i class="fa fa-edit"></i>*@
+                        Güncelle
+                    </a>
+                    <a class="btn btn-danger btn-outline" href="/Menu/Delete?MenuName=@menu.Name">
+                        @*<i class="fa fa-trash"></i>*@
+                        Sil
+                    </a>
+                    
+                </td>
+            </tr> }
+                            else
+                            {
+            <tr>
+                <td>
+                    @menu.Id
+                </td>
+                <td>@menu.Name</td>
+                <td>@menu.Pages.Count() </td>
+                <td>@menu.UpdatedAt </td>
+                <td>
+
+
+
+                    <a class="btn btn-warning btn-outline" href="/Menu/Update?MenuName=@menu.Name">
+
+                        Güncelle
+                    </a>
+                    <a class="btn btn-danger btn-outline" href="/Menu/Delete?MenuName=@menu.Name">
+
+                        Sil
+                    </a>
+                    <!--<a class="btn btn-success btn-outline" href="/Menu/Add">-->@*<i class="fa fa-plus"></i>*@ <!--Ekle</a>-->
+                </td>
+            </tr>}
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END EXAMPLE TABLE PORTLET-->

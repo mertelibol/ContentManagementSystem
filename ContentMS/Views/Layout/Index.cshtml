@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Common.DTOs.LayoutDto>
+@*@model CMS.Admin.Models.LayoutModel*@
+@{ ViewBag.Title = "Index";
+                }
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="pull-right">
+                
+            </div>
+        </div>
+
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase">Layoutlar</span>
+                </div>
+
+                <div class="tools"> </div>
+
+            </div>
+            <div class="portlet-body">
+                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th> # </th>
+                            <th> Layout Adı </th>
+                            <th> Kolon Saysı </th>
+                            <th>
+                                İşlemler
+                                <a style="margin-left:250px" class="btn btn-success btn-outline" href="/Layout/Add">@*<i class="fa fa-plus"></i>*@Layout Ekle</a>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var layoutBilgi in Model)
+                        {
+            <tr>
+                <td>
+                    @layoutBilgi.Id
+                </td>
+                <td>@layoutBilgi.Name </td>
+                <td>@layoutBilgi.Items.Count() </td>
+                <td>
+                    <a class="btn btn-warning btn-outline" href="/Layout/Update?layoutName=@layoutBilgi.Name">
+                        @*<i class="fa fa-edit"></i>*@
+                        Güncelle
+                    </a>
+                    <a class="btn btn-danger btn-outline" href="/Layout/Delete?layoutName=@layoutBilgi.Name">
+                        @*<i class="fa fa-trash"></i>*@
+                        Sil
+                    </a>
+                </td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END EXAMPLE TABLE PORTLET-->

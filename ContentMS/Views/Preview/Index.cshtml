@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<Common.DTOs.PageContentDto>
+@using System.Text.RegularExpressions;
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Önizleme</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        @*<a class="navbar-brand" href="#">@ViewBag.menu.Name</a>*@
+    </nav>
+
+
+
+    <div class="container">
+        <div class="row">
+            @foreach (var i in Model)
+            {
+                <div class="@i.Class">
+                    <div class="card">
+                        <div class="card-body">
+
+                            @Html.Raw(i.Content)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
+
